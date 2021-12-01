@@ -2,7 +2,7 @@
   "name": "WorkReport",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "https://workreport-v1.herokuapp.com/",
   "dependencies": {
     "@date-io/date-fns": "^2.11.0",
     "@date-io/dayjs": "^2.11.0",
