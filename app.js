@@ -8,8 +8,8 @@ const configEnv = require("dotenv").config({
   path: path.join(__dirname, "./config.env"),
 });
 
+app.use(cors());
 app.use(express.json());
-app.use(cros());
 //configure router middleware here
 app.use("/api/record/", recordRouter);
 
