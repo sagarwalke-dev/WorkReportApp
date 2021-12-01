@@ -13,7 +13,7 @@ const server = http.createServer(app);
 
 //configure server port number
 server.listen(PORT, function () {
-  console.log("server running on :" + PORT);
+  console.log("server started on :" + PORT);
 });
 
 // step 3: Heroku
