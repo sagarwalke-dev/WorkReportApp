@@ -9,7 +9,7 @@ const configEnv = require("dotenv").config({
 });
 
 app.use(express.json());
-app.use(cros);
+app.use(cros());
 //configure router middleware here
 app.use("/api/record/", recordRouter);
 
