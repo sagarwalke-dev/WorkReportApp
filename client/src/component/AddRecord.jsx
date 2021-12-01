@@ -9,7 +9,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import Grid from '@mui/material/Grid';
 import { Col, Form, FormGroup, Label, Input, FormText, Row } from 'reactstrap';
-
+import axios from "axios";
 
 function AddRecord() {
   const [startTime, setStartTime] = React.useState(
@@ -35,6 +35,9 @@ function AddRecord() {
    "amount":amount,
    "description":description
  }
+
+ axios.post("https://workreport-v1.herokuapp.com/api/record/addRecord",data);
+
  console.log(data);
   };
 
