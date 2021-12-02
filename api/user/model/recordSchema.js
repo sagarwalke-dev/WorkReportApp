@@ -11,8 +11,12 @@ let RecordSchema = mongoose.Schema({
   amount: { type: Number },
   totalHours: { type: Number },
   totalAmount: { type: Number },
-  createdAt: { type: Date, default: Date.now() },
-});
+  createdAt: { type: Date, default: Date.now() }
+},
+  {
+    bufferCommands: false,
+    autoCreate: false // disable `autoCreate` since `bufferCommands` is false
+  });
 
 //Hashing password before save into DB
 // UserSchema.pre("save", async function (next) {
