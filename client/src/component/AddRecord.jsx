@@ -22,7 +22,8 @@ function AddRecord() {
   const [date, setDate] = React.useState(new Date("2014-08-18T21:11:54"));
   const [amount, setAmount] = React.useState("0");
   const [description, setDescription] = React.useState(" ");
-  const [openAlert, setOpenAlert] = React.useState(false);
+  const [openErrorAlert, setErrorAlert] = React.useState(false);
+  const [openSuccessAlert, setSuccessAlert] = React.useState(false);
   const handleAmount = (e) => {
     setAmount(e.target.value);
   };
@@ -38,7 +39,6 @@ function AddRecord() {
       amount: amount,
       description: description,
     };
-    setOpenAlert(true);
     let response = await axios.post(
       "https://workreport-v1.herokuapp.com/api/record/addRecord",
       // "http://localhost:5000/api/record/addRecord",
@@ -47,29 +47,45 @@ function AddRecord() {
 
     if (response) {
       console.log(response.data);
+      if(response.data.status==201){
+        setErrorAlert(false);
+        setSuccessAlert(true);
+        setTimeout(()=>{
+          setSuccessAlert(false);
+        },2000);
+      }
+      else{
+        setSuccessAlert(false);
+        setErrorAlert(true);
+      }
     } else {
       console.log(response);
     }
 
     console.log(data);
   };
-  let onDismiss = () => {
-    setOpenAlert(false);
-  };
+  
   return (
     <>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Container className='card card-signin flex-row my-5 shadow-lg p-3 mb-5 bg-white rounded text-center'>
           <h1>Add Record </h1>
           <Alert
-            show={openAlert}
-            variant='danger'
+            show={openErrorAlert}
+            color='danger'
             className='mt-3 ml-3 w-25'
-            toggle={onDismiss}
-            fade={true}>
-            Error
+            // toggle={onDismiss}
+            >
+            Failed to add record. Please try later.
           </Alert>
-
+          <Alert
+            show={openSuccessAlert}
+            color='success'
+            className='mt-3 ml-3 w-25'
+            // toggle={onDismiss}
+            >
+           Record added successfully.
+          </Alert>
           <Row>
             <Col md={3} className='mt-3'>
               <TimePicker
