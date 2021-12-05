@@ -11,11 +11,13 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { Link, NavLink,useHistory  } from 'react-router-dom'
 
 const pages = ['Add Record', 'View All', 'Blog'];
+const menuLink=['/addRecord','/viewAll','/blog']
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 const Header = () => {
+  const history=useHistory();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -32,8 +34,14 @@ const Header = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-  };
 
+ 
+  };
+  const redirectTo=(index)=>{
+      // e.preventDefault();
+      console.log(index);
+      history.push("/home123");
+  }
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -76,8 +84,8 @@ const Header = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} to="/ge" onClick={handleCloseNavMenu}>
+              {pages.map((page,index) => (
+                <MenuItem key={page} component={Link} to={menuLink[index]}  style={{ textDecoration: 'none' }}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -92,15 +100,21 @@ const Header = () => {
             WorkReport App
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
+            {pages.map((page,index) => (
+              
+              <Link
+               to={menuLink[index]}
                 key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, ml:3, color: 'white', display: 'block' }}
+                style={{ color:'white', marginLeft:'1rem', textDecoration: 'none' }}
               >
                 {page}
-              </Button>
+              </Link>
             ))}
+
+
+            
+            
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
