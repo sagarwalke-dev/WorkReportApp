@@ -1,13 +1,13 @@
+const RecordSchema = require("../model/recordSchema");
+let getAll = async (req, res) => {
+  try {
+    console.log("get all controller started");
+    const records = await RecordSchema.find();
+    res.json({ status: 200, data: records });
+  } catch (err) {
+    res.json({ status: 500, message: "Something went wrong" });
+    console.log(err);
+  }
+};
 
-const getAll=async (req,res)=>{
-    try{
-        console.log("get all controller started");
-
-
-    }catch(err){
-        res.json({ status: 500, message: "Something went wrong" });
-        console.log(err);
-    }
-}
-
-module.exports={getAll};
+module.exports = { getAll };
