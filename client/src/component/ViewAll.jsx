@@ -123,8 +123,8 @@ export default function CustomPaginationActionsTable() {
 
   const getTableData = async () => {
     console.log("getting data");
-    // let url = "https://workreport-v1.herokuapp.com/api/record/getAll";
-    let url = "http://localhost:5000/api/record/getAll";
+    let url = "https://workreport-v1.herokuapp.com/api/record/getAll";
+    // let url = "http://localhost:5000/api/record/getAll";
     let response = await axios.get(url);
     let rowsData = [];
     if (response.data.status == 200) {
