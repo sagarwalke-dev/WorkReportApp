@@ -47,14 +47,13 @@ function AddRecord() {
 
     if (response) {
       console.log(response.data);
-      if(response.data.status==201){
+      if (response.data.status == 201) {
         setErrorAlert(false);
         setSuccessAlert(true);
-        setTimeout(()=>{
+        setTimeout(() => {
           setSuccessAlert(false);
-        },2000);
-      }
-      else{
+        }, 2000);
+      } else {
         setSuccessAlert(false);
         setErrorAlert(true);
       }
@@ -64,7 +63,7 @@ function AddRecord() {
 
     console.log(data);
   };
-  
+
   return (
     <>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -75,7 +74,7 @@ function AddRecord() {
             color='danger'
             className='mt-3 ml-3 w-25'
             // toggle={onDismiss}
-            >
+          >
             Failed to add record. Please try later.
           </Alert>
           <Alert
@@ -83,8 +82,8 @@ function AddRecord() {
             color='success'
             className='mt-3 ml-3 w-25'
             // toggle={onDismiss}
-            >
-           Record added successfully.
+          >
+            Record added successfully.
           </Alert>
           <Row>
             <Col md={3} className='mt-3'>
