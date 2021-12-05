@@ -1,22 +1,36 @@
 const RecordSchema = require("../model/recordSchema");
 
 let addTaskRecord = async (req, res) => {
-  const { date, startTime, endTime, description, amount } = req.body;
+  let { date, startTime, endTime, description, amount } = req.body;
   console.log("record add start");
   try {
     if (!date || !startTime || !endTime || !amount) {
       return res.json({ status: 422, message: "Please fill all data" });
     } else {
-      let totalHours = 0;
+      let totalMinutes = 0;
       let totalAmount = 0;
       //add into db
+      date = new Date(date);
+      date =
+        addZero(date.getDate()) +
+        "/" +
+        addZero(date.getMonth() + 1) +
+        "/" +
+        date.getFullYear();
+      startTime = new Date(startTime);
+      endTime = new Date(endTime);
+      let ms = endTime - startTime;
+      endTime = formatAMPM(endTime);
+      startTime = formatAMPM(startTime);
+      totalMinutes = Math.floor((ms / 1000 / 60) << 0);
+      totalAmount = Math.round((amount / 60) * totalMinutes);
       const record = new RecordSchema({
         date: date,
         startTime: startTime,
         endTime: endTime,
         description: description,
         amount: amount,
-        totalHours: totalHours,
+        totalHours: totalMinutes,
         totalAmount: totalAmount,
       });
 
@@ -25,7 +39,7 @@ let addTaskRecord = async (req, res) => {
         return res.json({
           status: 201,
           message: "Record Added",
-          totalHours: totalHours,
+          totalHours: totalMinutes,
           totalAmount: totalAmount,
         });
       } else {
@@ -39,4 +53,21 @@ let addTaskRecord = async (req, res) => {
   console.log("record add end");
 };
 
+let addZero = (i) => {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+};
+
+let formatAMPM = (date) => {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? "pm" : "am";
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  var strTime = addZero(hours) + ":" + addZero(minutes) + " " + ampm;
+  return strTime;
+};
 module.exports = { addTaskRecord };

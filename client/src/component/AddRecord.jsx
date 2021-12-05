@@ -38,8 +38,8 @@ function AddRecord() {
       description: description,
     };
     let response = await axios.post(
-      "https://workreport-v1.herokuapp.com/api/record/addRecord",
-      // "http://localhost:5000/api/record/addRecord",
+      // "https://workreport-v1.herokuapp.com/api/record/addRecord",
+      "http://localhost:5000/api/record/addRecord",
       data
     );
 
