@@ -16,10 +16,10 @@ import axios from "axios";
 
 function AddRecord() {
   const [startTime, setStartTime] = React.useState(
-    new Date("2014-08-18T21:11:54")
+    new Date()
   );
-  const [endTime, setEndTime] = React.useState(new Date("2014-08-18T21:11:54"));
-  const [date, setDate] = React.useState(new Date("2014-08-18T21:11:54"));
+  const [endTime, setEndTime] = React.useState(new Date());
+  const [date, setDate] = React.useState(new Date());
   const [amount, setAmount] = React.useState("0");
   const [description, setDescription] = React.useState(" ");
   const [openErrorAlert, setErrorAlert] = React.useState(false);
@@ -52,7 +52,7 @@ function AddRecord() {
         setSuccessAlert(true);
         setTimeout(()=>{
           setSuccessAlert(false);
-        },2000);
+        },5000);
       }
       else{
         setSuccessAlert(false);
@@ -70,10 +70,11 @@ function AddRecord() {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Container className='card card-signin flex-row my-5 shadow-lg p-3 mb-5 bg-white rounded text-center'>
           <h1>Add Record </h1>
+          <div style={{textAlign:'center'}}>
           <Alert
             show={openErrorAlert}
             color='danger'
-            className='mt-3 ml-3 w-25'
+            className='mt-3 ml-3 w-100'
             // toggle={onDismiss}
             >
             Failed to add record. Please try later.
@@ -81,13 +82,13 @@ function AddRecord() {
           <Alert
             show={openSuccessAlert}
             color='success'
-            className='mt-3 ml-3 w-25'
+            className='mt-3 w-100'
             // toggle={onDismiss}
             >
            Record added successfully.
           </Alert>
           <Row>
-            <Col md={3} className='mt-3'>
+            <Col sm={{ size: 'auto', offset: 1 }} className='mt-3'>
               <TimePicker
                 renderInput={(props) => <TextField {...props} />}
                 label='Start Time'
@@ -97,7 +98,7 @@ function AddRecord() {
                 }}
               />
             </Col>
-            <Col md={3} className='mt-3'>
+            <Col sm={{ size: 'auto', offset: 1 }} className='mt-3'>
               <TimePicker
                 renderInput={(props) => <TextField {...props} />}
                 label='End Time'
@@ -110,7 +111,7 @@ function AddRecord() {
           </Row>
 
           <Row className='mt-3'>
-            <Col md={3} className='mt-3'>
+            <Col sm={{ size: 'auto', offset: 1 }} className='mt-3'>
               <DatePicker
                 label='Working Day Date'
                 value={date}
@@ -125,34 +126,41 @@ function AddRecord() {
                 )}
               />
             </Col>
-            <Col md={3} className='mt-3'>
+            <Col sm={{ size: 'auto', offset: 1 }} className='mt-3'>
               <TextField
                 id='outlined-number'
-                label='Number'
+                label='Amount'
                 type='number'
                 InputLabelProps={{
                   shrink: true,
                 }}
                 onChange={handleAmount}
+                style={{width:'260px'}}
               />
             </Col>
           </Row>
 
           <Row className='mt-3'>
-            <Col md={3} className='mt-3'>
+            <Col sm={{ size: 'auto', offset: 1 }} className='mt-3'>
               <TextField
                 id='filled-helperText'
                 label='Work Description'
                 defaultValue=' '
                 onChange={handleDescription}
+                style={{width:'620px'}}
               />
             </Col>
-            <Col md={3} className='mt-3'>
+           
+          </Row>
+
+          <Row>
+          <Col sm={{ size: 'auto', offset: 1 }} className='mt-3'>
               <Button variant='contained' onClick={handleSubmit}>
                 Add Record
               </Button>
             </Col>
           </Row>
+          </div>
         </Container>
       </LocalizationProvider>
     </>
