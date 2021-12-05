@@ -176,7 +176,7 @@ const head=["Date","Start Time","End Time","Amount","Total Time","Total Amount"]
             </TableRow>
           )}
         </TableBody>
-        <TableFooter style={{textAlign:'right'}}>
+        <TableFooter style={{textAlign:'center'}}>
           <TableRow>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
