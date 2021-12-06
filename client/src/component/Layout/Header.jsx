@@ -49,10 +49,13 @@ const Header = () => {
           <Typography
             variant="h6"
             noWrap
-            component="div"
+            component={Link} to="/"
+            style={{ textDecoration: 'none', color:'white' }}
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
+            
               WorkReport App
+         
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
