@@ -20,7 +20,7 @@ import * as React from "react";
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from "axios";
-
+import {Col, Row} from 'reactstrap'
 let tableData = [];
 // let rows = [];
 
@@ -114,6 +114,9 @@ export default function RecordTable(prpos) {
     let [monthNumber, setMonthNumber] = React.useState(new Date().getMonth());
     let [yearNumber, setYearNumber] = React.useState(new Date().getFullYear());
     let [response,setReponse]=React.useState([]);
+    let [totalHours,setTotalHours]=React.useState(0);
+    let [amount,setAmount]=React.useState(0);
+    let [totalPaid,setTotalPaid]=React.useState(0);
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let date = new Date();
     let years = [date.getFullYear()];
@@ -124,8 +127,8 @@ export default function RecordTable(prpos) {
   
     React.useEffect(() => {
       console.log("passing props to getTableData in RecordTable.jsx")
-    getTableData(prpos);
-  });
+    getTableData();
+  },[]);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -163,9 +166,26 @@ export default function RecordTable(prpos) {
       });
       setRows(rowsData);
     }
+    //get monthly calculation
+   getTotalCalculation();
+    
     console.log(rows);
     // console.log(tableData);
   };
+
+  const getTotalCalculation=async()=>{
+    let data={
+      'month':monthNumber+1,
+      'year':yearNumber
+  }
+  let url="http://localhost:5000/api/record/getMonthlyCalculation";
+  let response=await axios.post(url,data);
+    if(response.data.status==200){
+      setTotalHours((response.data.data[0].totalHours)/60);
+      setAmount(response.data.data[0].amount);
+      setTotalPaid(response.data.data[0].totalPaid);
+    }
+  }
   return (
     <Container className='card card-signin flex-row my-5 shadow-lg p-3 mb-5 bg-white rounded text-center'>
       
@@ -207,6 +227,18 @@ export default function RecordTable(prpos) {
                     >
                         Search
                     </Button>
+
+                    <Row>
+                              <Col style={{fontWeight:'500'}}>
+                              Total Hours:    {totalHours}
+                              </Col>
+
+                              <Col style={{fontWeight:'500'}}>                              Amount:   {amount}
+                              </Col>
+
+                              <Col style={{fontWeight:'500'}}>                              Total Paid:   {totalPaid}
+                              </Col>
+                    </Row>
                 </div>
 <hr/>
       <TableContainer component={Paper}>

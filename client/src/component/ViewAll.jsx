@@ -111,7 +111,7 @@ export default function CustomPaginationActionsTable() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
   React.useEffect(() => {
     getTableData();
-  });
+  },[]);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
