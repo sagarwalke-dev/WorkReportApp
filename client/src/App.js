@@ -4,6 +4,7 @@ import AddRecord from "./component/AddRecord";
 import Header from "./component/Layout/Header";
 import ViewAll from "./component/ViewAll";
 import MonthlyReport from "./component/MonthlyReport";
+import RecordTable from "./component/RecordTable";
 function App() {
   return (
     <>
@@ -11,7 +12,7 @@ function App() {
       <Switch>
         <Route exact path='/addRecord' component={AddRecord} />
         <Route exact path='/viewAll' component={ViewAll} />
-          <Route exact path='/monthlyReport' component={MonthlyReport}/>
+          <Route exact path='/monthlyReport' component={RecordTable}/>
       </Switch>
       {/* <Footer /> */}
     </>

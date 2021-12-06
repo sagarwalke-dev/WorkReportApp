@@ -3,6 +3,7 @@ var express = require("express");
 const addRecordController = require("../controller/addRecordController");
 const getAllController = require("../controller/getAllController");
 const deleteAllController = require("../controller/deleteAllController");
+const getByMonthAndYearController = require("../controller/getByMonthAndYearController");
 
 const app = express();
 var router = express.Router();
@@ -21,6 +22,10 @@ router.get("/getAll", function (req, res) {
 
 router.get("/deleteAll", function (req, res) {
   deleteAllController.deleteAll(req, res);
+});
+
+router.post("/getByMonthAndYear", function (req, res) {
+  getByMonthAndYearController.getByMonthAndYear(req, res);
 });
 
 module.exports = router;
