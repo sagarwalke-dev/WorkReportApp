@@ -18,7 +18,7 @@ function AddRecord() {
   const [startTime, setStartTime] = React.useState(new Date());
   const [endTime, setEndTime] = React.useState(new Date());
   const [date, setDate] = React.useState(new Date());
-  const [amount, setAmount] = React.useState("0");
+  const [amount, setAmount] = React.useState();
   const [description, setDescription] = React.useState(" ");
   const [openErrorAlert, setErrorAlert] = React.useState(false);
   const [openSuccessAlert, setSuccessAlert] = React.useState(false);

@@ -2,7 +2,13 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import { FormControl, InputLabel, MenuItem, Select, TableHead } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TableHead,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
@@ -17,10 +23,10 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import PropTypes from "prop-types";
 import * as React from "react";
-import Button from '@mui/material/Button';
-import SearchIcon from '@mui/icons-material/Search';
+import Button from "@mui/material/Button";
+import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
-import {Col, Row} from 'reactstrap'
+import { Col, Row } from "reactstrap";
 let tableData = [];
 // let rows = [];
 
@@ -111,24 +117,41 @@ export default function RecordTable(prpos) {
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-    let [monthNumber, setMonthNumber] = React.useState(new Date().getMonth());
-    let [yearNumber, setYearNumber] = React.useState(new Date().getFullYear());
-    let [response,setReponse]=React.useState([]);
-    let [totalHours,setTotalHours]=React.useState(0);
-    let [amount,setAmount]=React.useState(0);
-    let [totalPaid,setTotalPaid]=React.useState(0);
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    let date = new Date();
-    let years = [date.getFullYear()];
+  let [monthNumber, setMonthNumber] = React.useState(new Date().getMonth());
+  let [yearNumber, setYearNumber] = React.useState(new Date().getFullYear());
+  let [response, setReponse] = React.useState([]);
+  let [totalHours, setTotalHours] = React.useState(0);
+  let [amount, setAmount] = React.useState(0);
+  let [totalPaid, setTotalPaid] = React.useState(0);
+  let months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  let date = new Date();
+  let years = [date.getFullYear()];
 
-    for (let i = 1; i <= 5; i++) {
-        years[i] = (date.getFullYear() - i);
-    }
-  
-    React.useEffect(() => {
-      console.log("passing props to getTableData in RecordTable.jsx")
+  for (let i = 1; i <= 5; i++) {
+    years[i] = date.getFullYear() - i;
+  }
+
+  React.useEffect(() => {
+    console.log("passing props to getTableData in RecordTable.jsx");
     getTableData();
-  },[]);
+  }, []);
+
+  React.useEffect(() => {
+    getTableData();
+  }, [monthNumber, yearNumber]);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -139,21 +162,20 @@ export default function RecordTable(prpos) {
   };
 
   const getTableData = async () => {
-      
-    let data={
-        'month':monthNumber+1,
-        'year':yearNumber
-    }
-      
+    let data = {
+      month: monthNumber + 1,
+      year: yearNumber,
+    };
 
     // console.log("getting data");
-    // let url = "https://workreport-v1.herokuapp.com/api/record/getAll";
-    let url="http://localhost:5000/api/record/getByMonthAndYear";
-    let response = await axios.post(url,data);
+    let url = "https://workreport-v1.herokuapp.com/api/record/getAll";
+    // let url = "http://localhost:5000/api/record/getByMonthAndYear";
+    let response = await axios.post(url, data);
     let rowsData = [];
+    console.log(response.data.status);
     if (response.data.status == 200) {
       tableData = response.data.data;
-      
+      console.log("TD" + tableData);
       tableData.map((data, index) => {
         rowsData[index] = createData(
           data.date,
@@ -167,80 +189,85 @@ export default function RecordTable(prpos) {
       setRows(rowsData);
     }
     //get monthly calculation
-   getTotalCalculation();
-    
-    console.log(rows);
+    getTotalCalculation();
+
     // console.log(tableData);
   };
 
-  const getTotalCalculation=async()=>{
-    let data={
-      'month':monthNumber+1,
-      'year':yearNumber
-  }
-  let url="http://localhost:5000/api/record/getMonthlyCalculation";
-  let response=await axios.post(url,data);
-    if(response.data.status==200){
-      setTotalHours((response.data.data[0].totalHours)/60);
+  const getTotalCalculation = async () => {
+    let data = {
+      month: monthNumber + 1,
+      year: yearNumber,
+    };
+    let url =
+      "https://workreport-v1.herokuapp.com/api/record/getMonthlyCalculation";
+    let response = await axios.post(url, data);
+    if (response.data.status == 200) {
+      setTotalHours(response.data.data[0].totalHours / 60);
       setAmount(response.data.data[0].amount);
       setTotalPaid(response.data.data[0].totalPaid);
+    } else {
+      setTotalHours(0);
+      setAmount(0);
+      setTotalPaid(0);
     }
-  }
+  };
   return (
     <Container className='card card-signin flex-row my-5 shadow-lg p-3 mb-5 bg-white rounded text-center'>
-      
-      <div style={{ textAlign: 'center' }}>
-                    <h1>Monthly Report</h1>
-                    <hr/>
-                    <FormControl sx={{ m: 1, minWidth: 190 }}>
-                        <InputLabel id="month">Month</InputLabel>
-                        <Select
-                            labelId="month"
-                            id="month"
-                            label="Month"
-                            value={monthNumber}
-                            onChange={e => setMonthNumber(e.target.value)}>
+      <div style={{ textAlign: "center" }}>
+        <h1>Monthly Report</h1>
+        <hr />
+        <FormControl sx={{ m: 1, minWidth: 190 }}>
+          <InputLabel id='month'>Month</InputLabel>
+          <Select
+            labelId='month'
+            id='month'
+            label='Month'
+            value={monthNumber}
+            onChange={(e) => {
+              setMonthNumber(e.target.value);
+              // getTableData();
+            }}>
+            {months.map((month, index) => (
+              <MenuItem value={index}>{month}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-                            { months.map((month, index) => (
-                                    <MenuItem value={index}>{month}</MenuItem>
-                            ))}
+        <FormControl sx={{ m: 1, minWidth: 190 }}>
+          <InputLabel id='year'>Year</InputLabel>
+          <Select
+            labelId='year'
+            id='year'
+            label='year'
+            value={yearNumber}
+            onChange={(e) => {
+              setYearNumber(e.target.value);
+              // getTableData();
+            }}>
+            {years.map((year) => (
+              <MenuItem value={year}>{year}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        {/* <Button
+          variant='outlined'
+          className='mt-3 ml-3'
+          startIcon={<SearchIcon />}
+          // onClick={getTableData()}
+        >
+          Search
+        </Button> */}
 
-                        </Select>
-                    </FormControl>
+        <Row>
+          <Col style={{ fontWeight: "500" }}>Total Hours: {totalHours}</Col>
 
-                    <FormControl sx={{ m: 1, minWidth: 190 }}>
-                        <InputLabel id="year">Year</InputLabel>
-                        <Select
-                            labelId="year"
-                            id="year"
-                            label="year"
-                            value={yearNumber}
-                            onChange={e => setYearNumber(e.target.value)}>
+          <Col style={{ fontWeight: "500" }}> Amount: {amount}</Col>
 
-                            { years.map((year) => (
-                                    <MenuItem value={year}>{year}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <Button variant="outlined" className='mt-3 ml-3' startIcon={<SearchIcon />} 
-                    // onClick={getData}
-                    >
-                        Search
-                    </Button>
-
-                    <Row>
-                              <Col style={{fontWeight:'500'}}>
-                              Total Hours:    {totalHours}
-                              </Col>
-
-                              <Col style={{fontWeight:'500'}}>                              Amount:   {amount}
-                              </Col>
-
-                              <Col style={{fontWeight:'500'}}>                              Total Paid:   {totalPaid}
-                              </Col>
-                    </Row>
-                </div>
-<hr/>
+          <Col style={{ fontWeight: "500" }}> Total Paid: {totalPaid}</Col>
+        </Row>
+      </div>
+      <hr />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 500 }} aria-label='custom pagination table'>
           <TableHead>
