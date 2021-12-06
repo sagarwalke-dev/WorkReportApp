@@ -168,7 +168,8 @@ export default function RecordTable(prpos) {
     };
 
     // console.log("getting data");
-    let url = "https://workreport-v1.herokuapp.com/api/record/getAll";
+    let url =
+      "https://workreport-v1.herokuapp.com/api/record/getByMonthAndYear";
     // let url = "http://localhost:5000/api/record/getByMonthAndYear";
     let response = await axios.post(url, data);
     let rowsData = [];
@@ -278,8 +279,8 @@ export default function RecordTable(prpos) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.date}>
+            {rows.map((row, index) => (
+              <TableRow key={index}>
                 <TableCell component='th' scope='row'>
                   {row.date}
                 </TableCell>
