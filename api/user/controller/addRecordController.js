@@ -9,14 +9,13 @@ let addTaskRecord = async (req, res) => {
     } else {
       let totalMinutes = 0;
       let totalAmount = 0;
+      let month;
+      let year;
       //add into db
       date = new Date(date);
-      date =
-        addZero(date.getDate()) +
-        "/" +
-        addZero(date.getMonth() + 1) +
-        "/" +
-        date.getFullYear();
+      month=(date.getMonth())+1;
+      year=date.getFullYear();
+      date = addZero(date.getDate()) + "/" + addZero(date.getMonth() + 1) + "/" + date.getFullYear();
       startTime = new Date(startTime);
       endTime = new Date(endTime);
       let ms = endTime - startTime;
@@ -32,6 +31,8 @@ let addTaskRecord = async (req, res) => {
         amount: amount,
         totalHours: totalMinutes,
         totalAmount: totalAmount,
+        month:month,
+        year:year
       });
 
       const response = await record.save();

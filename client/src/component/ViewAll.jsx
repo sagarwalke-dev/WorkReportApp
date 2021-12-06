@@ -146,6 +146,7 @@ export default function CustomPaginationActionsTable() {
   };
   return (
     <Container className='card card-signin flex-row my-5 shadow-lg p-3 mb-5 bg-white rounded text-center'>
+      <h1>All Record</h1>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 500 }} aria-label='custom pagination table'>
           <TableHead>

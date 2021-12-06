@@ -3,6 +3,7 @@ import { Route, Router, Switch } from "react-router";
 import AddRecord from "./component/AddRecord";
 import Header from "./component/Layout/Header";
 import ViewAll from "./component/ViewAll";
+import MonthlyReport from "./component/MonthlyReport";
 function App() {
   return (
     <>
@@ -10,7 +11,7 @@ function App() {
       <Switch>
         <Route exact path='/addRecord' component={AddRecord} />
         <Route exact path='/viewAll' component={ViewAll} />
-
+          <Route exact path='/monthlyReport' component={MonthlyReport}/>
       </Switch>
       {/* <Footer /> */}
     </>

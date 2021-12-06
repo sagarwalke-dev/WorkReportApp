@@ -13,8 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link, NavLink,useHistory  } from 'react-router-dom'
 
-const pages = ['Add Record', 'View All', 'Blog'];
-const menuLink=['/addRecord','/viewAll','/blog']
+const pages = ['Add Record', 'View All', 'Monthly Report'];
+const menuLink=['/addRecord','/viewAll','/monthlyReport']
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const Header = () => {
   const history=useHistory();

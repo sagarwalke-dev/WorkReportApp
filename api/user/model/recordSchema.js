@@ -11,6 +11,8 @@ let RecordSchema = mongoose.Schema({
   amount: { type: Number },
   totalHours: { type: Number },
   totalAmount: { type: Number },
+  month: { type: Number },
+  year: { type: Number },
   createdAt: { type: Date, default: Date.now() }
 },
   {
