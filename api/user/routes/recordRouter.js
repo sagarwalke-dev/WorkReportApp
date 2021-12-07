@@ -2,7 +2,7 @@
 var express = require("express");
 const addRecordController = require("../controller/addRecordController");
 const getAllController = require("../controller/getAllController");
-const deleteAllController = require("../controller/deleteAllController");
+const deleteByIdController = require("../controller/deleteByIdController");
 const getByMonthAndYearController = require("../controller/getByMonthAndYearController");
 const getMonthlyCalculationController = require("../controller/getMonthlyCalculationController");
 
@@ -22,8 +22,8 @@ router.get("/getAll", function (req, res) {
   getAllController.getAll(req, res);
 });
 
-router.get("/deleteAll", function (req, res) {
-  deleteAllController.deleteAll(req, res);
+router.post("/deleteById", function (req, res) {
+  deleteByIdController.deleteById(req, res);
 });
 
 router.post("/getByMonthAndYear", function (req, res) {

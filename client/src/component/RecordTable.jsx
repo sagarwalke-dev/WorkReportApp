@@ -96,8 +96,8 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(date, startTime, endTime, amount, totalTime, totalAmount) {
-  return { date, startTime, endTime, amount, totalTime, totalAmount };
+function createData(id,date, startTime, endTime, amount, totalTime, totalAmount) {
+  return { id,date, startTime, endTime, amount, totalTime, totalAmount };
 }
 
 // let rows = [];
@@ -106,6 +106,7 @@ export default function RecordTable(prpos) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const head = [
+    "Record Id",
     "Date",
     "Start Time",
     "End Time",
@@ -176,9 +177,10 @@ export default function RecordTable(prpos) {
     console.log(response.data.status);
     if (response.data.status == 200) {
       tableData = response.data.data;
-      console.log("TD" + tableData);
-      tableData.map((data, index) => {
+let id;      tableData.map((data, index) => {
+        id=data._id.substr(data._id.length - 5)
         rowsData[index] = createData(
+          id,
           data.date,
           data.startTime,
           data.endTime,
@@ -281,6 +283,9 @@ export default function RecordTable(prpos) {
           <TableBody>
             {rows.map((row, index) => (
               <TableRow key={index}>
+                <TableCell component='th' scope='row'>
+                  {row.id}
+                </TableCell>
                 <TableCell component='th' scope='row'>
                   {row.date}
                 </TableCell>

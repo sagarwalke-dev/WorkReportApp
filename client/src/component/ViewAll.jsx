@@ -88,8 +88,8 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(date, startTime, endTime, amount, totalTime, totalAmount) {
-  return { date, startTime, endTime, amount, totalTime, totalAmount };
+function createData(id,date, startTime, endTime, amount, totalTime, totalAmount) {
+  return {id, date, startTime, endTime, amount, totalTime, totalAmount };
 }
 
 // let rows = [];
@@ -98,6 +98,7 @@ export default function CustomPaginationActionsTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const head = [
+    "Record Id",
     "Date",
     "Start Time",
     "End Time",
@@ -128,9 +129,12 @@ export default function CustomPaginationActionsTable() {
     let response = await axios.get(url);
     let rowsData = [];
     if (response.data.status == 200) {
+      let id;
       tableData = response.data.data;
       tableData.map((data, index) => {
+        id=data._id.substr(data._id.length - 5)
         rowsData[index] = createData(
+          id,
           data.date,
           data.startTime,
           data.endTime,
@@ -161,7 +165,12 @@ export default function CustomPaginationActionsTable() {
               ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               : rows
             ).map((row) => (
-              <TableRow key={row.date}>
+              <TableRow key={row.id}>
+                
+                <TableCell component='th' scope='row'>
+                  {row.id}
+                </TableCell>
+
                 <TableCell component='th' scope='row'>
                   {row.date}
                 </TableCell>
