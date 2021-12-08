@@ -12,6 +12,7 @@ let addTaskRecord = async (req, res) => {
       let month;
       let year;
       //add into db
+      
       date = new Date(date);
       month=(date.getMonth())+1;
       year=date.getFullYear();
@@ -34,7 +35,7 @@ let addTaskRecord = async (req, res) => {
         month:month,
         year:year
       });
-
+      // RecordSchema.init();
       const response = await record.save();
       if (response) {
         return res.json({

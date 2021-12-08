@@ -18,6 +18,7 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 import Container from "@mui/material/Container";
 import { TableHead } from "@mui/material";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 let tableData = [];
 // let rows = [];
@@ -132,7 +133,7 @@ export default function CustomPaginationActionsTable() {
       let id;
       tableData = response.data.data;
       tableData.map((data, index) => {
-        id=data._id.substr(data._id.length - 5)
+        id=data._id;
         rowsData[index] = createData(
           id,
           data.date,
@@ -167,7 +168,7 @@ export default function CustomPaginationActionsTable() {
             ).map((row) => (
               <TableRow key={row.id}>
                 
-                <TableCell component='th' scope='row'>
+                <TableCell component={Link}  to={`/modifiy/${row.id}`} scope='row' style={{ textDecoration: 'none'}}>
                   {row.id}
                 </TableCell>
 

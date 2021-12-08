@@ -5,7 +5,8 @@ const getAllController = require("../controller/getAllController");
 const deleteByIdController = require("../controller/deleteByIdController");
 const getByMonthAndYearController = require("../controller/getByMonthAndYearController");
 const getMonthlyCalculationController = require("../controller/getMonthlyCalculationController");
-
+const validateRecordController = require("../controller/validateRecordController");
+const getByRecordIDController = require("../controller/getByRecordIDController");
 
 const app = express();
 var router = express.Router();
@@ -32,6 +33,16 @@ router.post("/getByMonthAndYear", function (req, res) {
 
 router.post("/getMonthlyCalculation", function (req, res) {
   getMonthlyCalculationController.getMonthlyCalculation(req, res);
+});
+
+
+router.post("/validateRecord", function (req, res) {
+  validateRecordController.validateRecord(req, res);
+});
+
+
+router.post("/getRecordByID", function (req, res) {
+  getByRecordIDController.getByRecordID(req, res);
 });
 
 module.exports = router;

@@ -4,6 +4,7 @@ const db = require("../../services/database");
 
 //creating userSchema
 let RecordSchema = mongoose.Schema({
+  // _id:{type:String},
   date: { type: String },
   startTime: { type: String },
   endTime: { type: String },
