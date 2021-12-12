@@ -3,7 +3,7 @@ let deleteById = async (req, res) => {
     console.log("deleteById controller started");
   try {
       let{id}=req.body;
-    const records = await RecordSchema.find({_id: ObjectI (id,'i')});
+    const records = await RecordSchema.deleteOne({_id: id});
     res.json({ status: 200, data: records });
   } catch (err) {
     res.json({ status: 500, message: "Something went wrong" });
