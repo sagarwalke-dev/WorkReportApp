@@ -40,26 +40,29 @@ function ModifiyRecord() {
     // console.log(this.props.match.params.id);
     validateRecord(window.location.pathname.split("/").pop());
 
-  })
+  },[])
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const handleYes = () => {
+  const handleYes = async() => {
     //call axios for delete record
-    let url="http://localhost:5000/api/record/deleteById"
+    // let url="http://localhost:5000/api/record/deleteById"
+    let url = "https://workreport-v1.herokuapp.com/api/record/deleteById";
+
     let data={
       "id":recordID
     }
-    axios.post(url,data);
+    let res=await axios.post(url,data);
+    console.log("After delete :" +res);
     setOpen(false); 
     setSuccessAlertMessage("Record deleted successfully.");
     setSuccessAlert(true);
     setTimeout(()=>{
       setSuccessAlert(false);
       history.push("/viewAll");
-    },200000)
+    },2000)
   };
 
   const handleAmount = (e) => {
@@ -110,12 +113,13 @@ function ModifiyRecord() {
 
   //validate input
   let validateRecord=async(id)=>{
-    let url="http://localhost:5000/api/record/validateRecord";
+    let url="https://workreport-v1.herokuapp.com/api/record/validateRecord";
     let data={"id":id};
     let res=await axios.post(url,data);
-    console.log(res);
+    console.log(res.data);
     if(res.data.status==200){
       if(res.data.isValid){
+        console.log(res.data.isValid)
         setDisableAll(false);
         setRecordId(res.data.data._id);
         setAmount(res.data.data.amount)

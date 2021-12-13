@@ -89,8 +89,8 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(id,date, startTime, endTime, amount, totalTime, totalAmount) {
-  return {id, date, startTime, endTime, amount, totalTime, totalAmount };
+function createData(id,_id,date, startTime, endTime, amount, totalTime, totalAmount) {
+  return {id,_id, date, startTime, endTime, amount, totalTime, totalAmount };
 }
 
 // let rows = [];
@@ -129,13 +129,14 @@ export default function CustomPaginationActionsTable() {
     // let url = "http://localhost:5000/api/record/getAll";
     let response = await axios.get(url);
     let rowsData = [];
-    if (response.data.status == 200) {
+    if (response.data.status === 200) {
       let id;
       tableData = response.data.data;
       tableData.map((data, index) => {
-        id=data._id;
-        rowsData[index] = createData(
+        id = data._id.substr(data._id.length - 5)
+                rowsData[index] = createData(
           id,
+          data._id,
           data.date,
           data.startTime,
           data.endTime,
@@ -168,7 +169,7 @@ export default function CustomPaginationActionsTable() {
             ).map((row) => (
               <TableRow key={row.id}>
                 
-                <TableCell component={Link}  to={`/modifiy/${row.id}`} scope='row' style={{ textDecoration: 'none'}}>
+                <TableCell component={Link}  to={`/modifiy/${row._id}`} scope='row' style={{ textDecoration: 'none'}}>
                   {row.id}
                 </TableCell>
 

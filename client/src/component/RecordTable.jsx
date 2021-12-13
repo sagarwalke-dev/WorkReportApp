@@ -7,7 +7,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TableHead,
+  TableHead
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -18,14 +18,11 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import axios from "axios";
 import PropTypes from "prop-types";
 import * as React from "react";
-import Button from "@mui/material/Button";
-import SearchIcon from "@mui/icons-material/Search";
-import axios from "axios";
+import { Link } from "react-router-dom";
 import { Col, Row } from "reactstrap";
 let tableData = [];
 // let rows = [];
@@ -96,8 +93,8 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(id,date, startTime, endTime, amount, totalTime, totalAmount) {
-  return { id,date, startTime, endTime, amount, totalTime, totalAmount };
+function createData(id,_id,date, startTime, endTime, amount, totalTime, totalAmount) {
+  return { id,_id, date, startTime, endTime, amount, totalTime, totalAmount };
 }
 
 // let rows = [];
@@ -177,10 +174,12 @@ export default function RecordTable(prpos) {
     console.log(response.data.status);
     if (response.data.status == 200) {
       tableData = response.data.data;
-let id;      tableData.map((data, index) => {
-        id=data._id.substr(data._id.length - 5)
+      let id; 
+      tableData.map((data, index) => {
+        id = data._id.substr(data._id.length - 5)
         rowsData[index] = createData(
           id,
+          data._id,
           data.date,
           data.startTime,
           data.endTime,
@@ -283,7 +282,7 @@ let id;      tableData.map((data, index) => {
           <TableBody>
             {rows.map((row, index) => (
               <TableRow key={index}>
-                <TableCell component='th' scope='row'>
+                <TableCell component='th' scope='row' component={Link}  to={`/modifiy/${row._id}`} scope='row' style={{ textDecoration: 'none'}}>
                   {row.id}
                 </TableCell>
                 <TableCell component='th' scope='row'>
